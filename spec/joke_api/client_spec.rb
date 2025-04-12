@@ -4,8 +4,18 @@ RSpec.describe JokeApi::Client do
   let(:client) { described_class.new }
 
   describe '#random_joke' do
-    subject { client.random_joke }
+    before do
+      body = '{"type":"general","setup":"Where do hamburgers go to dance?","punchline":"The meat-ball.","id":285}'
 
-    it { is_expected.to eq 'random_joke' }
+      stub_request(:get, "#{described_class::BASE_URL}/random_joke")
+        .to_return body: body, headers: { content_type: 'application/json' }
+    end
+
+    it do
+      expected_response = described_class::JokeResponse.new(id: 285, type: 'general')
+      actual_response = client.random_joke
+
+      expect(actual_response).to eq expected_response
+    end
   end
 end
