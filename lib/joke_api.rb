@@ -1,8 +1,4 @@
 # frozen_string_literal: true
 
-require_relative "joke_api/version"
-
-module JokeApi
-  class Error < StandardError; end
-  # Your code goes here...
-end
+require_relative 'joke_api/version'
+require_relative 'joke_api/client'
