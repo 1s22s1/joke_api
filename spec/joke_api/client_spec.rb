@@ -213,4 +213,26 @@ RSpec.describe JokeApi::Client do
       expect(client.random_general).to eq expected_response
     end
   end
+
+  describe '#random_knock_knock' do
+    let(:expected_response) do
+      described_class::JokeResponse.new(
+        id: 12,
+        type: 'knock-knock',
+        setup: 'Knock knock. \n" + " Who\'s there? \n" + " Cows go. \n" + " Cows go who?',
+        punchline: 'No, cows go moo.'
+      )
+    end
+
+    before do
+      body = File.read('spec/data/random_knock-knock.dat')
+
+      stub_request(:get, "#{described_class::BASE_URL}/jokes/knock-knock/random")
+        .to_return body: body, headers: { content_type: 'application/json' }
+    end
+
+    it do
+      expect(client.random_knock_knock).to eq expected_response
+    end
+  end
 end
