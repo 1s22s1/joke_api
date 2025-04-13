@@ -139,4 +139,28 @@ RSpec.describe JokeApi::Client do
       end
     end
   end
+
+  describe '#random' do
+    let(:expected_response) do
+      [
+        described_class::JokeResponse.new(
+          id: 27,
+          type: 'programming',
+          setup: 'To understand what recursion is...',
+          punchline: 'You must first understand what recursion is'
+        )
+      ]
+    end
+
+    before do
+      body = File.read('spec/data/random_one.dat')
+
+      stub_request(:get, "#{described_class::BASE_URL}/jokes/random/1")
+        .to_return body: body, headers: { content_type: 'application/json' }
+    end
+
+    it do
+      expect(client.random(1)).to eq expected_response
+    end
+  end
 end

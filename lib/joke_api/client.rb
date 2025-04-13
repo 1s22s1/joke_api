@@ -53,6 +53,12 @@ module JokeApi
       body.map { |joke| parse_joke_response(joke) }
     end
 
+    def random(number)
+      body = connection.get("/jokes/random/#{number}").body
+
+      body.map { |joke| parse_joke_response(joke) }
+    end
+
     private
 
     def connection
