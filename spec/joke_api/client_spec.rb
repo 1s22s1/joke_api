@@ -279,4 +279,56 @@ RSpec.describe JokeApi::Client do
       expect(client.dad_random).to eq expected_response
     end
   end
+
+  describe '#general_ten' do
+    before do
+      body = File.read('spec/data/general_ten.dat')
+
+      stub_request(:get, "#{described_class::BASE_URL}/jokes/general/ten")
+        .to_return body: body, headers: { content_type: 'application/json' }
+    end
+
+    it do
+      expect(client.general_ten.length).to eq 10
+    end
+  end
+
+  describe '#knock_knock_ten' do
+    before do
+      body = File.read('spec/data/knock-knock_ten.dat')
+
+      stub_request(:get, "#{described_class::BASE_URL}/jokes/knock-knock/ten")
+        .to_return body: body, headers: { content_type: 'application/json' }
+    end
+
+    it do
+      expect(client.knock_knock_ten.length).to eq 5
+    end
+  end
+
+  describe '#programming_ten' do
+    before do
+      body = File.read('spec/data/programming_ten.dat')
+
+      stub_request(:get, "#{described_class::BASE_URL}/jokes/programming/ten")
+        .to_return body: body, headers: { content_type: 'application/json' }
+    end
+
+    it do
+      expect(client.programming_ten.length).to eq 10
+    end
+  end
+
+  describe '#dad_ten' do
+    before do
+      body = File.read('spec/data/dad_ten.dat')
+
+      stub_request(:get, "#{described_class::BASE_URL}/jokes/dad/ten")
+        .to_return body: body, headers: { content_type: 'application/json' }
+    end
+
+    it do
+      expect(client.dad_ten.length).to eq 2
+    end
+  end
 end

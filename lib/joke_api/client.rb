@@ -79,6 +79,20 @@ module JokeApi
       parse_joke_response(body[0])
     end
 
+    %w[general programming dad].each do |type|
+      define_method "#{type}_ten" do
+        response = connection.get("/jokes/#{type}/ten")
+
+        response.body.map { |joke| parse_joke_response(joke) }
+      end
+    end
+
+    def knock_knock_ten
+      response = connection.get('/jokes/knock-knock/ten')
+
+      response.body.map { |joke| parse_joke_response(joke) }
+    end
+
     private
 
     def connection
