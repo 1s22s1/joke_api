@@ -10,13 +10,13 @@ Gem::Specification.new do |spec|
 
   spec.summary = 'API Client for Joke Official Joke API.'
   spec.description = 'API Client for Joke Official Joke API.'
-  spec.homepage = "https://github.com/1s22s1/joke_api/README.md"
+  spec.homepage = 'https://github.com/1s22s1/joke_api/README.md'
   spec.license = 'MIT'
   spec.required_ruby_version = '>= 3.1.0'
 
   spec.metadata['homepage_uri'] = spec.homepage
-  spec.metadata['source_code_uri'] = "https://github.com/1s22s1/joke_api"
-  spec.metadata['changelog_uri'] = "https://github.com/1s22s1/joke_api/CHANGELOG.md"
+  spec.metadata['source_code_uri'] = 'https://github.com/1s22s1/joke_api'
+  spec.metadata['changelog_uri'] = 'https://github.com/1s22s1/joke_api/CHANGELOG.md'
 
   gemspec = File.basename(__FILE__)
   spec.files = IO.popen(%w[git ls-files -z], chdir: __dir__, err: IO::NULL) do |ls|
