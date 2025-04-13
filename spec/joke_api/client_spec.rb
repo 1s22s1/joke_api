@@ -192,7 +192,7 @@ RSpec.describe JokeApi::Client do
     end
   end
 
-  describe '#random_general' do
+  describe '#general_random' do
     let(:expected_response) do
       described_class::JokeResponse.new(
         id: 428,
@@ -210,11 +210,11 @@ RSpec.describe JokeApi::Client do
     end
 
     it do
-      expect(client.random_general).to eq expected_response
+      expect(client.general_random).to eq expected_response
     end
   end
 
-  describe '#random_knock_knock' do
+  describe '#knock_knock_random' do
     let(:expected_response) do
       described_class::JokeResponse.new(
         id: 12,
@@ -232,11 +232,11 @@ RSpec.describe JokeApi::Client do
     end
 
     it do
-      expect(client.random_knock_knock).to eq expected_response
+      expect(client.knock_knock_random).to eq expected_response
     end
   end
 
-  describe '#random_programming' do
+  describe '#programming_random' do
     let(:expected_response) do
       described_class::JokeResponse.new(
         id: 440,
@@ -254,11 +254,11 @@ RSpec.describe JokeApi::Client do
     end
 
     it do
-      expect(client.random_programming).to eq expected_response
+      expect(client.programming_random).to eq expected_response
     end
   end
 
-  describe '#random_dad' do
+  describe '#dad_random' do
     let(:expected_response) do
       described_class::JokeResponse.new(
         id: 378,
@@ -276,7 +276,7 @@ RSpec.describe JokeApi::Client do
     end
 
     it do
-      expect(client.random_dad).to eq expected_response
+      expect(client.dad_random).to eq expected_response
     end
   end
 end

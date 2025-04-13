@@ -66,14 +66,14 @@ module JokeApi
     end
 
     %w[general programming dad].each do |type|
-      define_method "random_#{type}" do
+      define_method "#{type}_random" do
         body = connection.get("/jokes/#{type}/random").body
 
         parse_joke_response(body[0])
       end
     end
 
-    def random_knock_knock
+    def knock_knock_random
       body = connection.get('/jokes/knock-knock/random').body
 
       parse_joke_response(body[0])
