@@ -28,8 +28,13 @@ module JokeApi
     def random_joke
       body = connection.get('/random_joke').body
 
-      JokeResponse.new(id: body.fetch('id'), type: body.fetch('type'), setup: body.fetch('setup'),
-                       punchline: body.fetch('punchline'))
+      parse_joke_response(body)
+    end
+
+    def jokes_random
+      body = connection.get('/jokes/random').body
+
+      parse_joke_response(body)
     end
 
     private
@@ -38,6 +43,15 @@ module JokeApi
       @connection ||= Faraday.new(BASE_URL) do |builder|
         builder.response :json
       end
+    end
+
+    def parse_joke_response(body)
+      JokeResponse.new(
+        id: body.fetch('id'),
+        type: body.fetch('type'),
+        setup: body.fetch('setup'),
+        punchline: body.fetch('punchline')
+      )
     end
   end
 end

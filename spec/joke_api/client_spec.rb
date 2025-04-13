@@ -4,6 +4,15 @@ RSpec.describe JokeApi::Client do
   let(:client) { described_class.new }
 
   describe '#random_joke' do
+    let(:expected_response) do
+      described_class::JokeResponse.new(
+        id: 285,
+        type: 'general',
+        setup: 'Where do hamburgers go to dance?',
+        punchline: 'The meat-ball.'
+      )
+    end
+
     before do
       body = '{"type":"general","setup":"Where do hamburgers go to dance?","punchline":"The meat-ball.","id":285}'
 
@@ -12,11 +21,29 @@ RSpec.describe JokeApi::Client do
     end
 
     it do
-      expected_response = described_class::JokeResponse.new(id: 285, type: 'general',
-                                                            setup: 'Where do hamburgers go to dance?', punchline: 'The meat-ball.')
-      actual_response = client.random_joke
+      expect(client.random_joke).to eq expected_response
+    end
+  end
 
-      expect(actual_response).to eq expected_response
+  describe '#jokes_random' do
+    let(:expected_response) do
+      described_class::JokeResponse.new(
+        id: 285,
+        type: 'general',
+        setup: 'Where do hamburgers go to dance?',
+        punchline: 'The meat-ball.'
+      )
+    end
+
+    before do
+      body = '{"type":"general","setup":"Where do hamburgers go to dance?","punchline":"The meat-ball.","id":285}'
+
+      stub_request(:get, "#{described_class::BASE_URL}/jokes/random")
+        .to_return body: body, headers: { content_type: 'application/json' }
+    end
+
+    it do
+      expect(client.jokes_random).to eq expected_response
     end
   end
 end
