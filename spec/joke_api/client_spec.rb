@@ -141,26 +141,54 @@ RSpec.describe JokeApi::Client do
   end
 
   describe '#random' do
-    let(:expected_response) do
-      [
-        described_class::JokeResponse.new(
-          id: 27,
-          type: 'programming',
-          setup: 'To understand what recursion is...',
-          punchline: 'You must first understand what recursion is'
-        )
-      ]
+    context 'when id = 1' do
+      let(:expected_response) do
+        [
+          described_class::JokeResponse.new(
+            id: 27,
+            type: 'programming',
+            setup: 'To understand what recursion is...',
+            punchline: 'You must first understand what recursion is'
+          )
+        ]
+      end
+
+      before do
+        body = File.read('spec/data/random_one.dat')
+
+        stub_request(:get, "#{described_class::BASE_URL}/jokes/random/1")
+          .to_return body: body, headers: { content_type: 'application/json' }
+      end
+
+      it do
+        expect(client.random(1)).to eq expected_response
+      end
     end
 
-    before do
-      body = File.read('spec/data/random_one.dat')
+    context 'when id = a' do
+      before do
+        body = 'The passed path is not a number.'
 
-      stub_request(:get, "#{described_class::BASE_URL}/jokes/random/1")
-        .to_return body: body, headers: { content_type: 'application/json' }
+        stub_request(:get, "#{described_class::BASE_URL}/jokes/random/1")
+          .to_return body: body, status: 304, headers: { content_type: 'application/text' }
+      end
+
+      it do
+        expect { client.random('a') }.to raise_error(ArgumentError)
+      end
     end
 
-    it do
-      expect(client.random(1)).to eq expected_response
+    context 'when id = 1000' do
+      before do
+        body = 'The passed path exceeds the number of jokes (451).'
+
+        stub_request(:get, "#{described_class::BASE_URL}/jokes/random/1000")
+          .to_return body: body, headers: { content_type: 'application/text' }
+      end
+
+      it do
+        expect { client.random(1000) }.to raise_error(described_class::TooBigId)
+      end
     end
   end
 end

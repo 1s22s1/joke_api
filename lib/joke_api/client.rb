@@ -25,6 +25,8 @@ module JokeApi
       end
     end
 
+    class TooBigId < StandardError; end
+
     def random_joke
       body = connection.get('/random_joke').body
 
@@ -54,9 +56,13 @@ module JokeApi
     end
 
     def random(number)
-      body = connection.get("/jokes/random/#{number}").body
+      Integer(number)
 
-      body.map { |joke| parse_joke_response(joke) }
+      response = connection.get("/jokes/random/#{number}")
+
+      raise TooBigId, response.body if response.headers.fetch('content-type') == 'application/text'
+
+      response.body.map { |joke| parse_joke_response(joke) }
     end
 
     private
