@@ -203,7 +203,7 @@ RSpec.describe JokeApi::Client do
     end
 
     before do
-      body = File.read('spec/data/random_general.dat')
+      body = File.read('spec/data/general_random.dat')
 
       stub_request(:get, "#{described_class::BASE_URL}/jokes/general/random")
         .to_return body: body, headers: { content_type: 'application/json' }
@@ -225,7 +225,7 @@ RSpec.describe JokeApi::Client do
     end
 
     before do
-      body = File.read('spec/data/random_knock-knock.dat')
+      body = File.read('spec/data/knock-knock_random.dat')
 
       stub_request(:get, "#{described_class::BASE_URL}/jokes/knock-knock/random")
         .to_return body: body, headers: { content_type: 'application/json' }
@@ -247,7 +247,7 @@ RSpec.describe JokeApi::Client do
     end
 
     before do
-      body = File.read('spec/data/random_programming.dat')
+      body = File.read('spec/data/programming_random.dat')
 
       stub_request(:get, "#{described_class::BASE_URL}/jokes/programming/random")
         .to_return body: body, headers: { content_type: 'application/json' }
@@ -269,7 +269,7 @@ RSpec.describe JokeApi::Client do
     end
 
     before do
-      body = File.read('spec/data/random_dad.dat')
+      body = File.read('spec/data/dad_random.dat')
 
       stub_request(:get, "#{described_class::BASE_URL}/jokes/dad/random")
         .to_return body: body, headers: { content_type: 'application/json' }
