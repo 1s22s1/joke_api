@@ -11,22 +11,25 @@ module JokeApi
     class JokeResponse
       include Comparable
 
-      attr_reader :id, :type
+      attr_reader :id, :type, :setup, :punchline
 
-      def initialize(id:, type:)
+      def initialize(id:, type:, setup:, punchline:)
         @id = id
         @type = type
+        @setup = setup
+        @punchline = punchline
       end
 
       def <=>(other)
-        @id <=> other.id && @type <=> other.type
+        @id <=> other.id && @type <=> other.type && @setup <=> other.setup && @punchline <=> other.punchline
       end
     end
 
     def random_joke
       body = connection.get('/random_joke').body
 
-      JokeResponse.new(id: body.fetch('id'), type: body.fetch('type'))
+      JokeResponse.new(id: body.fetch('id'), type: body.fetch('type'), setup: body.fetch('setup'),
+                       punchline: body.fetch('punchline'))
     end
 
     private

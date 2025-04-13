@@ -12,7 +12,8 @@ RSpec.describe JokeApi::Client do
     end
 
     it do
-      expected_response = described_class::JokeResponse.new(id: 285, type: 'general')
+      expected_response = described_class::JokeResponse.new(id: 285, type: 'general',
+                                                            setup: 'Where do hamburgers go to dance?', punchline: 'The meat-ball.')
       actual_response = client.random_joke
 
       expect(actual_response).to eq expected_response
