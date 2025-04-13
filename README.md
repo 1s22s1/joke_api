@@ -22,7 +22,8 @@ gem install joke_api
 
 ```ruby
 client = JokeApi::Client.new # => #<JokeApi::Client:0x00007f2fc989d960>
-irb(main):003> client.random_joke # =>
+
+client.random_joke # =>
 #<JokeApi::Client::JokeResponse:0x00007f2fc97b4b20
  @id=415,
  @punchline="He didn't know how to commit.",
