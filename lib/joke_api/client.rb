@@ -65,7 +65,7 @@ module JokeApi
       response.body.map { |joke| parse_joke_response(joke) }
     end
 
-    [%w[general general], %w[knock_knock knock-knock]].each do |elem|
+    [%w[general general], %w[knock_knock knock-knock], %w[programming programming]].each do |elem|
       define_method "random_#{elem[0]}" do
         body = connection.get("/jokes/#{elem[1]}/random").body
 
