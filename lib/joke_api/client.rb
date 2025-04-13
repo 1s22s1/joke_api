@@ -47,6 +47,12 @@ module JokeApi
       body.map { |joke| parse_joke_response(joke) }
     end
 
+    def jokes_ten
+      body = connection.get('/jokes/ten').body
+
+      body.map { |joke| parse_joke_response(joke) }
+    end
+
     private
 
     def connection

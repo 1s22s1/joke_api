@@ -3,7 +3,7 @@
 RSpec.describe JokeApi::Client do
   let(:client) { described_class.new }
 
-  describe '#random_joke' do
+  context 'when grab a random joke' do
     let(:expected_response) do
       described_class::JokeResponse.new(
         id: 285,
@@ -16,34 +16,24 @@ RSpec.describe JokeApi::Client do
     before do
       body = '{"type":"general","setup":"Where do hamburgers go to dance?","punchline":"The meat-ball.","id":285}'
 
-      stub_request(:get, "#{described_class::BASE_URL}/random_joke")
+      stub_request(:get, "#{described_class::BASE_URL}/#{path}")
         .to_return body: body, headers: { content_type: 'application/json' }
     end
 
-    it do
-      expect(client.random_joke).to eq expected_response
-    end
-  end
+    describe '#random_joke' do
+      let(:path) { 'random_joke' }
 
-  describe '#jokes_random' do
-    let(:expected_response) do
-      described_class::JokeResponse.new(
-        id: 285,
-        type: 'general',
-        setup: 'Where do hamburgers go to dance?',
-        punchline: 'The meat-ball.'
-      )
+      it do
+        expect(client.random_joke).to eq expected_response
+      end
     end
 
-    before do
-      body = '{"type":"general","setup":"Where do hamburgers go to dance?","punchline":"The meat-ball.","id":285}'
+    describe '#jokes_random' do
+      let(:path) { 'jokes/random' }
 
-      stub_request(:get, "#{described_class::BASE_URL}/jokes/random")
-        .to_return body: body, headers: { content_type: 'application/json' }
-    end
-
-    it do
-      expect(client.jokes_random).to eq expected_response
+      it do
+        expect(client.jokes_random).to eq expected_response
+      end
     end
   end
 
@@ -60,7 +50,7 @@ RSpec.describe JokeApi::Client do
     end
   end
 
-  describe '#random_ten' do
+  context 'when grab ten random jokes' do
     let(:expected_response) do
       [
         described_class::JokeResponse.new(
@@ -129,12 +119,24 @@ RSpec.describe JokeApi::Client do
     before do
       body = File.read('spec/data/random_ten.dat')
 
-      stub_request(:get, "#{described_class::BASE_URL}/random_ten")
+      stub_request(:get, "#{described_class::BASE_URL}/#{path}")
         .to_return body: body, headers: { content_type: 'application/json' }
     end
 
-    it do
-      expect(client.random_ten).to eq expected_response
+    describe '#random_ten' do
+      let(:path) { 'random_ten' }
+
+      it do
+        expect(client.random_ten).to eq expected_response
+      end
+    end
+
+    describe '#jokes_ten' do
+      let(:path) { 'jokes/ten' }
+
+      it do
+        expect(client.jokes_ten).to eq expected_response
+      end
     end
   end
 end
