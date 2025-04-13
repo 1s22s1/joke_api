@@ -166,13 +166,6 @@ RSpec.describe JokeApi::Client do
     end
 
     context 'when id = a' do
-      before do
-        body = 'The passed path is not a number.'
-
-        stub_request(:get, "#{described_class::BASE_URL}/jokes/random/1")
-          .to_return body: body, status: 304, headers: { content_type: 'application/text' }
-      end
-
       it do
         expect { client.random('a') }.to raise_error(ArgumentError)
       end
@@ -187,7 +180,7 @@ RSpec.describe JokeApi::Client do
       end
 
       it do
-        expect { client.random(1000) }.to raise_error(described_class::TooBigId)
+        expect { client.random(1000) }.to raise_error(described_class::TooBigIdError)
       end
     end
   end
@@ -329,6 +322,49 @@ RSpec.describe JokeApi::Client do
 
     it do
       expect(client.dad_ten.length).to eq 2
+    end
+  end
+
+  describe '#get_by_id' do
+    context 'when id = 1' do
+      let(:expected_response) do
+        described_class::JokeResponse.new(
+          id: 1,
+          type: 'general',
+          setup: 'What did the fish say when it hit the wall?',
+          punchline: 'Dam.'
+        )
+      end
+
+      before do
+        body = File.read('spec/data/1.dat')
+
+        stub_request(:get, "#{described_class::BASE_URL}/jokes/1")
+          .to_return body: body, headers: { content_type: 'application/json' }
+      end
+
+      it do
+        expect(client.get_by_id(1)).to eq expected_response
+      end
+    end
+
+    context 'when id = a' do
+      it do
+        expect { client.get_by_id('a') }.to raise_error(ArgumentError)
+      end
+    end
+
+    context 'when id = 0' do
+      before do
+        body = File.read('spec/data/404.dat')
+
+        stub_request(:get, "#{described_class::BASE_URL}/jokes/0")
+          .to_return body: body, status: 404, headers: { content_type: 'application/text' }
+      end
+
+      it do
+        expect { client.get_by_id(0) }.to raise_error(described_class::NotFoundError)
+      end
     end
   end
 end
