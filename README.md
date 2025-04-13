@@ -1,28 +1,34 @@
 # JokeApi
 
-TODO: Delete this and the text below, and describe your gem
+API Client for [Official Joke API](https://github.com/15Dkatz/official_joke_api).
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/joke_api`. To experiment with that code, run `bin/console` for an interactive prompt.
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
-
 Install the gem and add to the application's Gemfile by executing:
 
 ```bash
-bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+bundle add joke_api
 ```
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
 ```bash
-gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+gem install joke_api
 ```
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+client = JokeApi::Client.new # => #<JokeApi::Client:0x00007f2fc989d960>
+irb(main):003> client.random_joke # =>
+#<JokeApi::Client::JokeResponse:0x00007f2fc97b4b20
+ @id=415,
+ @punchline="He didn't know how to commit.",
+ @setup="Why did the programmer's wife leave him?",
+ @type="programming">
+```
 
 ## Development
 
