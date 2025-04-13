@@ -37,6 +37,10 @@ module JokeApi
       parse_joke_response(body)
     end
 
+    def types
+      connection.get('/types').body
+    end
+
     private
 
     def connection

@@ -46,4 +46,17 @@ RSpec.describe JokeApi::Client do
       expect(client.jokes_random).to eq expected_response
     end
   end
+
+  describe '#types' do
+    before do
+      body = '["general","knock-knock","programming","dad"]'
+
+      stub_request(:get, "#{described_class::BASE_URL}/types")
+        .to_return body: body, headers: { content_type: 'application/json' }
+    end
+
+    it do
+      expect(client.types).to match %w[general knock-knock programming dad]
+    end
+  end
 end
